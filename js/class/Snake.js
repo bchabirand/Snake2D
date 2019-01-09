@@ -1,8 +1,8 @@
 class Snake {
     constructor() {
         this.body = [{
-            x: 0,
-            y: 0
+            y: 0,
+            x: 0
         }];
         this.direction = "RIGHT";
     }
@@ -11,7 +11,7 @@ class Snake {
     draw() {
         for (let key in this.body) {
             ctx.beginPath();
-            ctx.rect(this.body[key].x, this.body[key].y, game.cellSize, game.cellSize);
+            ctx.rect(this.body[key].x, this.body[key].y, board.cellSize, board.cellSize);
             ctx.closePath();
             ctx.fillStyle = (key === 0) ? '#FFFFFF' : '#F4F4F4';
             ctx.fill();
@@ -21,18 +21,18 @@ class Snake {
     /* @desc Move the snake to this.direction */
     moveToThisDirection() {
         let head = {
-            x: this.body[0].x,
-            y: this.body[0].y
+            y: this.body[0].y,
+            x: this.body[0].x
         }
 
         if (this.direction === "LEFT") {
-            head.x -= game.cellSize;
+            head.x -= board.cellSize;
         } else if (this.direction === "UP") {
-            head.y -= game.cellSize;
+            head.y -= board.cellSize;
         } else if (this.direction === "RIGHT") {
-            head.x += game.cellSize;
+            head.x += board.cellSize;
         } else if (this.direction === "DOWN") {
-            head.y += game.cellSize;
+            head.y += board.cellSize;
         }
 
         this.body.pop();
@@ -43,15 +43,15 @@ class Snake {
     /* @desc Check if the snake collides a wall, himself or food */
     checkCollisions() {
         let head = {
-            x: this.body[0].x,
-            y: this.body[0].y
+            y: this.body[0].y,
+            x: this.body[0].x
         }
 
         /* Collides a wall */
         if (head.y < 0 ||
             head.x < 0 ||
-            head.x + game.cellSize > canvas.width ||
-            head.y + game.cellSize > canvas.height) {
+            head.x + board.cellSize > canvas.width ||
+            head.y + board.cellSize > canvas.height) {
             game.isOver = 1;
         }
 
@@ -69,11 +69,11 @@ class Snake {
     }
 
     eatFood() {
-        game.Score = food.value;
+        game.score += food.value;
         food = new Food();
         this.body.push({
-            x: this.body[0].x,
-            y: this.body[0].y
+            y: this.body[0].y,
+            x: this.body[0].x
         });
     }
 }
