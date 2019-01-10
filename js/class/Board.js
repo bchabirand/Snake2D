@@ -26,8 +26,6 @@ class Board {
 				this.cells[col][row] = row * this.cellSize;
 			}
 		}
-
-		this.draw();
 	}
 
 	draw() {
