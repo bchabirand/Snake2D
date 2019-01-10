@@ -14,7 +14,6 @@ class Snake {
         };
     }
 
-    /* @desc Draw each part of the snake */
     draw() {
         for (let i in this.body) {
             ctx.beginPath();
@@ -29,7 +28,6 @@ class Snake {
         this.body.push(this.headPos);
     }
 
-    /* @desc Move the snake to this.direction */
     moveToThisDirection() {
         let snakehead = this.headPos;
 
@@ -49,7 +47,7 @@ class Snake {
 
     checkCollisions() {
 
-        if (this.collidesWalls() || this.collidesHimself()) {
+        if (this.collidesWall() || this.collidesHimself()) {
             return 1;
         }
         
@@ -60,7 +58,8 @@ class Snake {
         
         return 0;
     }
-
+    
+    /* @return {boolean} */
     collidesFood() {
         let snakeHead = this.headPos;
 
@@ -69,8 +68,9 @@ class Snake {
         }
         return 0;
     }
-
-    collidesWalls() {
+    
+    /* @return {boolean} */
+    collidesWall() {
         let snakeHead = this.headPos;
 
         if (snakeHead.y < 0 || snakeHead.x < 0 || snakeHead.x + 1 > board.width || snakeHead.y + 1 > board.height) {
@@ -78,7 +78,8 @@ class Snake {
         }
         return 0;
     }
-
+    
+    /* @return {boolean} */
     collidesHimself() {
         let snakeHead = this.headPos;
 

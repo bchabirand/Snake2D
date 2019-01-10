@@ -46,17 +46,19 @@ class Board {
 		}
 	}
 
+	/* @return {object: y, x} */
 	getRandomEmptyCell() {
 		let emptyCell = Math.floor(Math.random() * this.getEmptyCells().length);
 
 		let position = {
 			y: this.getEmptyCells()[emptyCell].y / this.cellSize,
 			x: this.getEmptyCells()[emptyCell].x / this.cellSize
-		}
+		};
 
 		return position;
 	}
 
+	/* @return {array} */
 	getEmptyCells() {
 		let emptyCells = [];
 		
@@ -75,6 +77,7 @@ class Board {
 		return emptyCells;
 	}
 
+	/* @return {boolean} */
 	isThisAnEmptyCell(y, x) {
 		for (let key in snake.body) {
 			if (snake.body[key].y === y && snake.body[key].x === x) {
