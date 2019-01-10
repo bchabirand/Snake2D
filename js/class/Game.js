@@ -52,13 +52,14 @@ class Game {
 				snake.moveToThisDirection();
 				snake.checkCollisions();
 			} else {
-				this.over();
 				clearInterval(this.loop);
+				this.over();
 			}
 		}, this.refreshTime);
 	}
 
 	restart() {
+		clearInterval(this.loop);
 		snake = new Snake();
 		food = new Food();
 		this.score = 0;

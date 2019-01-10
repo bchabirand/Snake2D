@@ -1,7 +1,6 @@
 class Food {
 	constructor() {
 		let emptyCell = Math.floor(Math.random() * board.GetEmptyCells.length);
-		console.log(emptyCell);
 		this.value = 10;
 		this.position = {
 			x: board.GetEmptyCells[emptyCell].x,
