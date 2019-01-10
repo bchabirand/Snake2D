@@ -3,7 +3,6 @@ class Board {
 		this.width;
 		this.height;
 
-		this.colliders;
 		this.cells;
 		this.cellSize = 32;
 		this.cellColorPrimary = '#222';
@@ -47,7 +46,18 @@ class Board {
 		}
 	}
 
-	get GetEmptyCells() {
+	getRandomEmptyCell() {
+		let emptyCell = Math.floor(Math.random() * this.getEmptyCells().length);
+
+		let position = {
+			y: this.getEmptyCells()[emptyCell].y / this.cellSize,
+			x: this.getEmptyCells()[emptyCell].x / this.cellSize
+		}
+
+		return position;
+	}
+
+	getEmptyCells() {
 		let emptyCells = [];
 		
 		for (let col in this.cells) {

@@ -50,7 +50,14 @@ class Game {
 				food.draw();
 				snake.draw();
 				snake.moveToThisDirection();
-				snake.checkCollisions();
+				let collide = snake.checkCollisions();
+				if (collide === 1) {
+					this.isOver = 1;
+				}
+				if (collide === 2) {
+					this.score += 10;
+					food = new Food();
+				}
 			} else {
 				clearInterval(this.loop);
 				this.over();

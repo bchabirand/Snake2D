@@ -7,73 +7,86 @@ class Snake {
         this.direction = "RIGHT";
     }
 
+    get headPos() {
+        return { 
+            y: this.body[0].y, 
+            x: this.body[0].x
+        };
+    }
+
     /* @desc Draw each part of the snake */
     draw() {
-        for (let key in this.body) {
+        for (let i in this.body) {
             ctx.beginPath();
-            ctx.rect(this.body[key].x, this.body[key].y, board.cellSize, board.cellSize);
+            ctx.rect(this.body[i].x * board.cellSize, this.body[i].y * board.cellSize, board.cellSize, board.cellSize);
             ctx.closePath();
-            ctx.fillStyle = (key === 0) ? '#FFFFFF' : '#F4F4F4';
+            ctx.fillStyle = (i === 0) ? '#FFFFFF' : '#F4F4F4';
             ctx.fill();
         }
     }
 
+    growUp() {
+        this.body.push(this.headPos);
+    }
+
     /* @desc Move the snake to this.direction */
     moveToThisDirection() {
-        let head = {
-            y: this.body[0].y,
-            x: this.body[0].x
-        }
+        let snakehead = this.headPos;
 
         if (this.direction === "LEFT") {
-            head.x -= board.cellSize;
+            snakehead.x -= 1;
         } else if (this.direction === "UP") {
-            head.y -= board.cellSize;
+            snakehead.y -= 1;
         } else if (this.direction === "RIGHT") {
-            head.x += board.cellSize;
+            snakehead.x += 1;
         } else if (this.direction === "DOWN") {
-            head.y += board.cellSize;
+            snakehead.y += 1;
         }
 
         this.body.pop();
-        this.body.unshift(head);
+        this.body.unshift(snakehead);
     }
 
-
-    /* @desc Check if the snake collides a wall, himself or food */
     checkCollisions() {
-        let head = {
-            y: this.body[0].y,
-            x: this.body[0].x
-        }
 
-        /* Collides a wall */
-        if (head.y < 0 ||
-            head.x < 0 ||
-            head.x + board.cellSize > canvas.width ||
-            head.y + board.cellSize > canvas.height) {
-            game.isOver = 1;
+        if (this.collidesWalls() || this.collidesHimself()) {
+            return 1;
         }
+        
+        if (this.collidesFood()) {
+            this.growUp();
+            return 2;
+        }
+        
+        return 0;
+    }
 
-        /* Collides himself */
-        for (let key in this.body) {
-            if (head.x === this.body[key].x && head.y === this.body[key].y && key > 0) {
-                game.isOver = 1;
+    collidesFood() {
+        let snakeHead = this.headPos;
+
+        if (snakeHead.x === food.position.x && snakeHead.y === food.position.y) {
+            return 1;
+        }
+        return 0;
+    }
+
+    collidesWalls() {
+        let snakeHead = this.headPos;
+
+        if (snakeHead.y < 0 || snakeHead.x < 0 || snakeHead.x + 1 > board.width || snakeHead.y + 1 > board.height) {
+            return 1;
+        }
+        return 0;
+    }
+
+    collidesHimself() {
+        let snakeHead = this.headPos;
+
+        for (let i in this.body) {
+            if (snakeHead.x === this.body[i].x && snakeHead.y === this.body[i].y && i > 0) {
+                return 1;
             }
         }
-
-        /* Collides food */
-        if (head.x === food.position.x && head.y === food.position.y) {
-            this.eatFood();
-        }
-    }
-
-    eatFood() {
-        game.score += food.value;
-        food = new Food();
-        this.body.push({
-            y: this.body[0].y,
-            x: this.body[0].x
-        });
+        return 0;
     }
 }
