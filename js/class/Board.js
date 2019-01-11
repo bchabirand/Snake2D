@@ -48,11 +48,12 @@ class Board {
 
 	/* @return {object: y, x} */
 	getRandomEmptyCell() {
-		let emptyCell = Math.floor(Math.random() * this.getEmptyCells().length);
+		let emptyCells = this.getEmptyCells();
+		let random = Math.floor(Math.random() * emptyCells.length);
 
 		let position = {
-			y: this.getEmptyCells()[emptyCell].y / this.cellSize,
-			x: this.getEmptyCells()[emptyCell].x / this.cellSize
+			y: emptyCells[random].y,
+			x: emptyCells[random].x
 		};
 
 		return position;
@@ -65,8 +66,8 @@ class Board {
 		for (let col in this.cells) {
 			for (let row in this.cells[col]) {
 				let cell = {
-					y: col * this.cellSize,
-					x: row * this.cellSize
+					y: col,
+					x: row
 				};
 				if (this.isThisAnEmptyCell(cell.y, cell.x)) {
 					emptyCells.push(cell);
@@ -79,8 +80,8 @@ class Board {
 
 	/* @return {boolean} */
 	isThisAnEmptyCell(y, x) {
-		for (let key in snake.body) {
-			if (snake.body[key].y === y && snake.body[key].x === x) {
+		for (let i in snake.body) {
+			if (snake.body[i].y === y && snake.body[i].x === x) {
 				return false;
 			}
 		}

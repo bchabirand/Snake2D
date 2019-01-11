@@ -1,9 +1,6 @@
 class Food {
 	constructor() {
-		this.position = {
-			y: board.getRandomEmptyCell().y,
-			x: board.getRandomEmptyCell().x
-		}
+		this.position = board.getRandomEmptyCell();
 	}
 
 	draw() {
