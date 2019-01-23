@@ -81,7 +81,7 @@ class Board {
 	/* @return {boolean} */
 	isThisAnEmptyCell(y, x) {
 		for (let i in snake.body) {
-			if (snake.body[i].y === y && snake.body[i].x === x) {
+			if (snake.body[i].y == y && snake.body[i].x == x) {
 				return false;
 			}
 		}
